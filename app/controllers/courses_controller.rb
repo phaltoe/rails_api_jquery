@@ -6,8 +6,12 @@ class CoursesController < ApplicationController
   end
 
   def create
-    course = Course.create(name: params[:name], details: params[:details])
+    course = Course.new(name: params[:name], details: params[:details])
 
-    render json: course
+    if course.save
+      render json: course
+    else
+      render json: {error: "Your course failed to save"}, status: 400
+    end
   end
 end

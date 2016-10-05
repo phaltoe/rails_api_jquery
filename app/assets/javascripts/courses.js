@@ -38,6 +38,9 @@ function addDataOnSubmit() {
       $('.courses').append(template);
       $form.find('.course-input').val("");
       $form.find('.course-details').val("");
+    }).fail(function(error) {
+      debugger;
+      $('.error').text(error.responseJSON.error);
     })
     
   })
