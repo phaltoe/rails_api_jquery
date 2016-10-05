@@ -28,14 +28,18 @@ function showDetailsOnToggle() {
 }
 
 function addDataOnSubmit() {
-  $('.new-course input[type=submit]').click(function() {
-    var $submitButton = $(this);
-    var input = $submitButton.siblings('.course-input').val();
-    var details = $submitButton.siblings('.course-details').val();
-    var template = '<li class="course" data-details="' + details +'">' + input + '</li>';
-    $('.courses').append(template);
-    $submitButton.siblings('.course-input').val("");
-    $submitButton.siblings('.course-details').val("");
+  $('#new_course').submit(function() {
+    event.preventDefault();
+    var $form = $(this);
+    var name = $form.find('.course-input').val();
+    var details = $form.find('.course-details').val();
+    $.post('/courses', {name: name, details: details}, function(result) {
+      var template = '<li class="course" data-details="' + result.details +'">' + result.name + '</li>';
+      $('.courses').append(template);
+      $form.find('.course-input').val("");
+      $form.find('.course-details').val("");
+    })
+    
   })
 }
 
